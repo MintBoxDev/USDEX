@@ -14,12 +14,12 @@
   <div></div>
   <div class="row mt-5">
     <div class="col col-12 text-center">
-      <h1>Total coins issued: <span id="totalIssued" class="text-info"></span>USDEX</h1>
+      <h1>Total coins issued: <span id="totalIssued" class="text-info"></span><span class="h2"> USDEX</span></h1>
       <h1>Backed USDT balance: ₮<span class="" id="usdtBalance"></span></h1>
     </div>
     <div class="col col-12 text-center">
-      <div class="small">This website is provided for public audit of USDEX coin and running directly from public GitHub repository</div>
-      <div class="small">USDT balance is taken directly from <a href="https://www.bithumb.pro/" target="_blank">Bithumb Global</a> cryptocurrency exchange used to back USDEX coin. USDEX balance is taken from official <a href="https://explorer.minter.network/address/Mx114c9906b54b44895b1c4d2336abb54b687e5ace">wallet</a> </div>
+      <div class="small">This website is provided for public audit of USDEX coin and running directly from public <a href="https://github.com/MintBoxDev/USDEX">GitHub repository</a> and hosted on GitHub Pages.</div>
+      <div class="small">USDT balance is taken directly from <a href="https://www.bithumb.pro/" target="_blank">Bithumb Global</a> cryptocurrency exchange account used to back USDEX coin. USDEX balance is taken from official <a href="https://explorer.minter.network/address/Mx114c9906b54b44895b1c4d2336abb54b687e5ace">wallet</a>.</div>
     </div>
   </div>
 
@@ -60,8 +60,6 @@
     document.getElementById('usdtBalance').innerText = Number(USDTBalance).toFixed(2);
     document.getElementById('usdtBalance').className = cls;
     document.getElementById('totalIssued').innerText = Number(stableEmission).toFixed(2);
-    // document.write("USDT "+USDTBalance);
-    // document.write(" - ISSUED stables "+stableEmission);
   </script>
 
 
