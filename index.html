@@ -1,76 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
 
-
-
-  </head>
 <body>
-  <div class="container">
-  <div class="row mt-5">
-    <div class="col col-12 text-center">
-      <h4>USDEX is a USDT backed stable coin on <a href="https://www.minter.network/">Minter</a> blockchain</h4>
-      <div>To get it simply send BIP to <span class="alert-info small p-1">Mx114c9906b54b44895b1c4d2336abb54b687e5ace</span>, it will be immediately exchanged to USDT and sent to you back as USDEX coin. Works both ways.</div>
-      <div>Min. accepted amount is <strong>800BIP</strong>. Max: <span id="max" class="">10000.00BIP</span></div>
-      <hr/>
-      <h1>Total coins issued: <span class="text-nowrap"><span id="totalIssued" class="text-info"></span><span class="h2"> USDEX</span></span></h1>
-      <h1>Backed USDT balance: ₮<span class="" id="usdtBalance"></span></h1>
-    </div>
-    <div class="col col-12 text-center">
-      <div class="small">This website is provided for public audit of USDEX coin, running from public <a href="https://github.com/MintBoxDev/USDEX">GitHub repository</a> and hosted on GitHub Pages (<a href="https://mintboxdev.github.io/USDEX/">https://mintboxdev.github.io/USDEX/</a> ).</div>
-      <div class="small">USDT balance is taken directly from <a href="https://www.bithumb.pro/" target="_blank">Bithumb Global</a> cryptocurrency exchange account used to back USDEX coin. USDEX balance is taken from official <a href="https://explorer.minter.network/address/Mx114c9906b54b44895b1c4d2336abb54b687e5ace">wallet</a>.</div>
-    </div>
-  </div>
-  </div>
-
-  <script>
-    //create and sign Bithumb request
-    const key="f0a83f2ff7234cc8e1d8960652adb6f6";
-    const secret="9e84a47a1343092208b875877b453e36f02eee523db5627452bb9c0402c63eb3"
-    let ts = Date.now();
-    let hash = CryptoJS.HmacSHA256("apiKey="+key+"&assetType=spot&timestamp="+ts+"&version=v1.0.0", secret);
-
-    let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "https://global-openapi.bithumb.pro/openapi/v1/spot/assetList?assetType=spot", false);
-    xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
-    xhttp.send('{"apiKey":"'+key+'","assetType":"spot","signature":"'+hash+'","timestamp":"'+ts+'","version":"v1.0.0"}');
-    let responseText = JSON.parse(xhttp.responseText);
-    const USDTBalance = responseText.data.find(d=>d.coinType === "USDT").count;
-    const BIPBalance = responseText.data.find(d=>d.coinType === "BIP").count;
-
-
-
-
-    //Get balance of stable coin wallet
-    const stableSupply = 1000000;
-    const stableWallet = "Mx114c9906b54b44895b1c4d2336abb54b687e5ace";
-    const stableTicker = "USDEX";
-    xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://explorer-api.minter.network/api/v2/addresses/"+stableWallet, false);
-    xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
-    xhttp.send();
-    responseText = JSON.parse(xhttp.responseText);
-    var stableAmount = responseText.data.balances.find(c=> c.coin.symbol === stableTicker).amount;
-    var bipAmount = responseText.data.balances.find(c=> c.coin.symbol === 'BIP').amount;
-
-
-    var stableEmission = stableSupply - stableAmount;
-
-
-    let cls = stableEmission > USDTBalance ? "text-danger": "text-success";
-
-    document.getElementById('usdtBalance').innerText = Number(USDTBalance).toFixed(2);
-    document.getElementById('usdtBalance').className = cls;
-    document.getElementById('totalIssued').innerText = Number(stableEmission).toFixed(2);
-    document.getElementById('max').innerText = Math.min(new Number(BIPBalance), 10000.00).toFixed(2);
-  </script>
 
 </body>
 
